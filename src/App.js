@@ -11,6 +11,7 @@ import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Home from './components/Home/Home'
 import ProductCards from './components/ProductIndex/ProductIndex'
+import CreateCart from './components/CreateCart/CreateCart'
 
 class App extends Component {
   constructor (props) {
@@ -69,6 +70,7 @@ class App extends Component {
           )} />
           <Route exact path='/' component={Home} />
           <Route exact path='/products' component={ProductCards} />
+          <AuthenticatedRoute user={user} path='/carts' component={CreateCart} />
         </main>
       </Fragment>
     )
