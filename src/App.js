@@ -11,14 +11,15 @@ import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Home from './components/Home/Home'
 import ProductIndex from './components/ProductIndex/ProductIndex'
-import CreateCart from './components/CreateCart/CreateCart'
+// import CreatePurchase from './components/CreatePurchase/CreatePurchase'
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
       user: null,
-      msgAlerts: []
+      msgAlerts: [],
+      product: null
     }
   }
 
@@ -69,8 +70,9 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
           <Route exact path='/' component={Home} />
-          <Route exact path='/products' component={ProductIndex} />
-          <AuthenticatedRoute user={user} path='/carts' component={CreateCart} />
+          <Route exact path='/products' render={() => (
+            <ProductIndex msgAlert={this.msgAlert} user={user} />
+          )} />
         </main>
       </Fragment>
     )

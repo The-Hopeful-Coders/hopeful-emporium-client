@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { Card, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Card } from 'react-bootstrap'
+// import { Link } from 'react-router-dom'
 import Spinner from 'react-bootstrap/Spinner'
 import { productIndex } from '../../api/products'
+import CreatePurchase from '../CreatePurchase/CreatePurchase'
 
 class ProductIndex extends Component {
   constructor (props) {
@@ -44,10 +45,12 @@ class ProductIndex extends Component {
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Text>{product.description}</Card.Text>
-            <Card.Text>{product.price}</Card.Text>
-            <Link to='/purchases'>
-              <Button>Purchase</Button>
-            </Link>
+            <Card.Text>${product.price}</Card.Text>
+            <CreatePurchase
+              product={product._id}
+              user={this.props.user}
+              msgAlert={this.props.msgAlert}
+            />
           </Card.Body>
         </Card>
       )
