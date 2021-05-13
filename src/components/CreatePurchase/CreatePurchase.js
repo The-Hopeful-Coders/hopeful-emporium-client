@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import { cartCreate } from '../../api/cart'
+import { purchaseCreate } from '../../api/purchase'
 import { Redirect } from 'react-router-dom'
 
-class CartCreate extends Component {
+class CreatePurchase extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      cart: {
-        count: null,
-        subtotal: null,
-        checkout: false
+      purchase: {
+        product: null
       },
       createdId: null
     }
@@ -20,26 +18,31 @@ class CartCreate extends Component {
     event.preventDefault()
 
     const { user, msgAlert } = this.props
-    const { cart } = this.state
+    const { purchase } = this.state
 
-    // create a cart, pass it the cart data and the user for its token
-    cartCreate(cart, user)
-      // set the createdId to the id of the cart we just created
-      // .then(res => this.setState({ createdId: res.data.cart._id }))
+    // create a purchase, pass it the purchase data and the user for its token
+    purchaseCreate(purchase, user)
+      // set the createdId to the id of the purchase we just created
+      // .then(res => this.setState({ createdId: res.data.purchase._id }))
       .then(res => {
-        this.setState({ createdId: res.data.cart._id })
+        this.setState({ createdId: res.data.purchase._id })
+        // pass the response to the next .then so we can show the title
+        return res
+      })
+      .then(res => {
+        this.setState({ purchase: res.data.purchase.product._id })
         // pass the response to the next .then so we can show the title
         return res
       })
       .then(res => msgAlert({
-        heading: 'Cart Created',
+        heading: 'Purchase Made',
         message: 'Go',
         variant: 'success'
       }))
       .catch(error => {
         msgAlert({
-          heading: 'Failed to Create Cart',
-          message: 'Could not create cart with error: ' + error.message,
+          heading: 'Failed to Create Purchase',
+          message: 'Could not create purchase with error: ' + error.message,
           variant: 'danger'
         })
       })
@@ -55,10 +58,10 @@ class CartCreate extends Component {
       this.setState(state => {
         // return our state changge
         return {
-          // set the cart state, to what it used to be (...state.cart)
+          // set the purchase state, to what it used to be (...state.purchase)
           // but replace the property with `name` to its current `value`
           // ex. name could be `title` or `director`
-          cart: { ...state.cart, [event.target.name]: event.target.value }
+          purchase: { ...state.purchase, [event.target.name]: event.target.value }
         }
       })
     }
@@ -69,14 +72,14 @@ class CartCreate extends Component {
       // if the movie has been created and we set its id
       if (createdId) {
       // redirect to the movies show page
-        return <Redirect to={`/carts/${createdId}`} />
+        return <Redirect to={`/purchases/${createdId}`} />
       }
       return (
         <div>
-          <h3>Created Cart</h3>
+          <h3>Created Purchase</h3>
         </div>
       )
     }
 }
 
-export default CartCreate
+export default CreatePurchase
