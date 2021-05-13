@@ -11,6 +11,7 @@ import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Home from './components/Home/Home'
 import ProductIndex from './components/ProductIndex/ProductIndex'
+import ShowPurchase from './components/ShowPurchase/ShowPurchase'
 // import CreatePurchase from './components/CreatePurchase/CreatePurchase'
 
 class App extends Component {
@@ -72,6 +73,9 @@ class App extends Component {
           <Route exact path='/' component={Home} />
           <Route exact path='/products' render={() => (
             <ProductIndex msgAlert={this.msgAlert} user={user} />
+          )} />
+          <Route exact path='/purchases/:id' render={() => (
+            <ShowPurchase msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
       </Fragment>
