@@ -23,13 +23,13 @@ class ShowPurchase extends Component {
       // set the purchase state, to the purchase we got back in the response's data
       .then(res => this.setState({ purchase: res.data.purchase }))
       .then(() => msgAlert({
-        heading: 'Here is Your Purchase',
-        message: 'The purchase is now displayed.',
+        heading: 'Purchase Made!',
+        message: 'An invoice is being sent to your email.',
         variant: 'success'
       }))
       .catch(error => {
         msgAlert({
-          heading: 'Showing Movie Failed',
+          heading: 'Showing Purchase Failed',
           message: 'Failed to show purchase with error: ' + error.message,
           variant: 'danger'
         })
@@ -44,13 +44,13 @@ class ShowPurchase extends Component {
       // set the deleted variable to true, to redirect to the purchases page in render
       .then(() => this.setState({ deleted: true }))
       .then(() => msgAlert({
-        heading: 'Deleted Movie Successfully!',
-        message: 'Movie deleted!',
+        heading: 'Purchase Refunded Successfully!',
+        message: 'Transaction will be refunded in 3-5 business days',
         variant: 'success'
       }))
       .catch(error => {
         msgAlert({
-          heading: 'Deleting Movie Failed',
+          heading: 'Purchase Refund Failed',
           message: 'Failed with error: ' + error.message,
           variant: 'danger'
         })
@@ -78,7 +78,7 @@ class ShowPurchase extends Component {
 
     return (
       <div>
-        <h3>{name}</h3>
+        <h3>Yay, you have a phone booth in route!</h3>
         <button onClick={this.handleDelete}>Get Refund</button>
       </div>
     )
