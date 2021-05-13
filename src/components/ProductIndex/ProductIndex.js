@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
 import { productIndex } from '../../api/products'
 
-class ProductCards extends Component {
+class ProductIndex extends Component {
   constructor (props) {
     super(props)
 
@@ -19,21 +20,33 @@ class ProductCards extends Component {
   }
 
   render () {
+    // destructure our movies state
+    const { products } = this.state
+
+    // if we haven't fetched any movies yet from the API
+    if (!products) {
+      // A Spinner is just a nice loading message we get from react bootstrap
+      return (
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      )
+    }
     const cardContainerLayout = {
       display: 'flex',
       justifyContent: 'center',
       flexFlow: 'row wrap'
     }
-    const productCards = this.products.map(product => {
+    const productCards = products.map(product => {
       return (
-        <Card key={product.id} style={{ width: '18rem' }}>
-          <Card.Img variant='top' src={product.backgroundUrl}/>
+        <Card key={product._id} style={{ width: '18rem' }}>
+          {/* <Card.Img variant='top' src={product.backgroundUrl}/> */}
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Text>{product.description}</Card.Text>
             <Card.Text>{product.price}</Card.Text>
-            <Link to='/carts'>
-              <Button>Add to Cart</Button>
+            <Link to='/purchases'>
+              <Button>Purchase</Button>
             </Link>
           </Card.Body>
         </Card>
@@ -47,4 +60,4 @@ class ProductCards extends Component {
   }
 }
 
-export default ProductCards
+export default ProductIndex

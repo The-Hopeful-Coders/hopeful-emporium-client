@@ -10,7 +10,7 @@ import SignIn from './components/SignIn/SignIn'
 import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 import Home from './components/Home/Home'
-import ProductCards from './components/ProductIndex/ProductIndex'
+import ProductIndex from './components/ProductIndex/ProductIndex'
 import CreateCart from './components/CreateCart/CreateCart'
 
 class App extends Component {
@@ -69,7 +69,7 @@ class App extends Component {
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
           <Route exact path='/' component={Home} />
-          <Route exact path='/products' component={ProductCards} />
+          <Route exact path='/products' component={ProductIndex} />
           <AuthenticatedRoute user={user} path='/carts' component={CreateCart} />
         </main>
       </Fragment>
