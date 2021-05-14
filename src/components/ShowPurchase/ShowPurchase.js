@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
+import { Button } from 'react-bootstrap'
 // import withRouter so we have access to the match route prop
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter, Redirect, Link } from 'react-router-dom'
 import { purchaseShow, purchaseDelete } from '../../api/purchase'
 import { Button } from 'react-bootstrap'
 
@@ -18,6 +19,7 @@ class ShowPurchase extends Component {
 
   componentDidMount () {
     const { user, match, msgAlert } = this.props
+    console.log('this is the match', match)
     console.log('this is user', user)
     // make a request for a single purchase
     purchaseShow(match.params.id, user)
@@ -39,7 +41,6 @@ class ShowPurchase extends Component {
 
   handleDelete = event => {
     const { user, msgAlert, match } = this.props
-
     // make a delete axios request
     purchaseDelete(match.params.id, user)
       // set the deleted variable to true, to redirect to the purchases page in render
@@ -78,10 +79,18 @@ class ShowPurchase extends Component {
     }
 
     return (
-      <div>
-        <h3>Yay, you have your very own phone booth in route!</h3>
-        <Button onClick={this.handleDelete}>Get Refund</Button>
-      </div>
+      <Fragment>
+        <div>
+          <h3>Yay, you have your very own phone booth in route!</h3>
+          <h5>Item: {purchase.product.name}</h5>
+          <p>{purchase.product.description}</p>
+          <p>Price: ${purchase.product.price}</p>
+          <Button onClick={this.handleDelete}>Get Refund</Button>
+          <Button>
+            <Link to="/products">Buy More</Link>
+          </Button>
+        </div>
+      </Fragment>
     )
   }
 }
