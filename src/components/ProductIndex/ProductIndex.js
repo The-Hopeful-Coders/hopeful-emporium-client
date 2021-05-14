@@ -40,7 +40,7 @@ class ProductIndex extends Component {
     }
     const productCards = products.map(product => {
       return (
-        <Card key={product._id} style={{ width: '18rem' }}>
+        <Card bg="secondary" key={product._id} style={{ width: '16rem', margin: 8 }}>
           {/* <Card.Img variant='top' src={product.backgroundUrl}/> */}
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
