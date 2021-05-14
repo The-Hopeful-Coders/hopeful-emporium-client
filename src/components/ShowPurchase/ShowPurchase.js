@@ -4,7 +4,6 @@ import { Button } from 'react-bootstrap'
 // import withRouter so we have access to the match route prop
 import { withRouter, Redirect, Link } from 'react-router-dom'
 import { purchaseShow, purchaseDelete } from '../../api/purchase'
-import { Button } from 'react-bootstrap'
 
 class ShowPurchase extends Component {
   constructor (props) {
