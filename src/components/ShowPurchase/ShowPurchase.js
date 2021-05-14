@@ -3,6 +3,7 @@ import Spinner from 'react-bootstrap/Spinner'
 // import withRouter so we have access to the match route prop
 import { withRouter, Redirect } from 'react-router-dom'
 import { purchaseShow, purchaseDelete } from '../../api/purchase'
+import { Button } from 'react-bootstrap'
 
 class ShowPurchase extends Component {
   constructor (props) {
@@ -78,8 +79,8 @@ class ShowPurchase extends Component {
 
     return (
       <div>
-        <h3>Yay, you have a phone booth in route!</h3>
-        <button onClick={this.handleDelete}>Get Refund</button>
+        <h3>Yay, you have your very own phone booth in route!</h3>
+        <Button onClick={this.handleDelete}>Get Refund</Button>
       </div>
     )
   }
