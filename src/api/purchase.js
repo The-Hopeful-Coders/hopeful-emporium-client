@@ -2,7 +2,6 @@ import apiUrl from '../apiConfig'
 import axios from 'axios'
 
 export const purchaseCreate = (productId, user) => {
-  console.log('This is the purchase ', productId)
   return axios({
     url: apiUrl + '/purchases',
     method: 'POST',
@@ -34,6 +33,18 @@ export const purchaseDelete = (id, user) => {
   return axios({
     url: apiUrl + '/purchases/' + id,
     method: 'DELETE',
+    // Add an authorization header
+    headers: {
+      // we need the user, so we have access to their token
+      'Authorization': `Bearer ${user.token}`
+    }
+  })
+}
+
+export const purchaseIndex = user => {
+  return axios({
+    url: apiUrl + '/purchases',
+    method: 'GET',
     // Add an authorization header
     headers: {
       // we need the user, so we have access to their token

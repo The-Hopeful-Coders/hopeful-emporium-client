@@ -25,8 +25,8 @@ class ShowPurchase extends Component {
       // set the purchase state, to the purchase we got back in the response's data
       .then(res => this.setState({ purchase: res.data.purchase }))
       .then(() => msgAlert({
-        heading: 'Purchase Made!',
-        message: 'An invoice is being sent to your email.',
+        heading: 'Here\'s Your Purchase!',
+        message: 'Enjoy your phonebooth or request a refund.',
         variant: 'success'
       }))
       .catch(error => {
@@ -74,7 +74,7 @@ class ShowPurchase extends Component {
     // if the purchase is deleted
     if (deleted) {
       // redirect to the purchases index page
-      return <Redirect to="/products" />
+      return <Redirect to="/index-purchases" />
     }
 
     return (
@@ -85,9 +85,12 @@ class ShowPurchase extends Component {
           <p>{purchase.product.description}</p>
           <p>Price: ${purchase.product.price}</p>
           <Button onClick={this.handleDelete}>Get Refund</Button>
-          <Button>
-            <Link to="/products">Buy More</Link>
-          </Button>
+          <Link to="/products">
+            <Button>Buy More</Button>
+          </Link>
+          <Link to="/index-purchases">
+            <Button>View All Purchases</Button>
+          </Link>
         </div>
       </Fragment>
     )
