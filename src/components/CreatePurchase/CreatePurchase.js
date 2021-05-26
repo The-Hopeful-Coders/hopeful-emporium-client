@@ -18,7 +18,6 @@ class CreatePurchase extends Component {
 
     const { user, msgAlert } = this.props
     const product = this.props.product
-    console.log('this should be a product id', product)
 
     // create a purchase, pass it the purchase data and the user for its token
     purchaseCreate(product, user)
@@ -30,8 +29,8 @@ class CreatePurchase extends Component {
         return res
       })
       .then(res => msgAlert({
-        heading: 'Purchase Made',
-        message: 'Go',
+        heading: 'Purchase Made Successfully',
+        message: 'An invoice will be sent to your email.',
         variant: 'success'
       }))
       .catch(error => {
