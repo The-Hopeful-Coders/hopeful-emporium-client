@@ -78,7 +78,7 @@ class App extends Component {
           <Route exact path='/purchases/:id' render={() => (
             <ShowPurchase msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} exact path='/purchases' render={() => (
+          <AuthenticatedRoute user={user} exact path='/index-purchases' render={() => (
             <PurchaseIndex msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
