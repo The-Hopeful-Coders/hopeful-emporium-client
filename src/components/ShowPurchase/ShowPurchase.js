@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
-import { Button } from 'react-bootstrap'
+import { Button, DropdownButton, Dropdown } from 'react-bootstrap'
 // import withRouter so we have access to the match route prop
 import { withRouter, Redirect, Link } from 'react-router-dom'
-import { purchaseShow, purchaseDelete } from '../../api/purchase'
+import { purchaseShow, purchaseDelete, purchaseUpdate } from '../../api/purchase'
 
 class ShowPurchase extends Component {
   constructor (props) {
@@ -12,27 +12,46 @@ class ShowPurchase extends Component {
     // initially our purchase state will be null, until it is fetched from the api
     this.state = {
       purchase: null,
-      deleted: false
+      deleted: false,
+      updated: false
     }
   }
 
   componentDidMount () {
     const { user, match, msgAlert } = this.props
-    console.log('this is the match', match)
-    console.log('this is user', user)
     // make a request for a single purchase
     purchaseShow(match.params.id, user)
       // set the purchase state, to the purchase we got back in the response's data
       .then(res => this.setState({ purchase: res.data.purchase }))
       .then(() => msgAlert({
-        heading: 'Purchase Made!',
-        message: 'An invoice is being sent to your email.',
+        heading: 'Here\'s Your Purchase!',
+        message: 'Enjoy your phonebooth or request a refund.',
         variant: 'success'
       }))
       .catch(error => {
         msgAlert({
           heading: 'Showing Purchase Failed',
           message: 'Failed to show purchase with error: ' + error.message,
+          variant: 'danger'
+        })
+      })
+  }
+
+  handleUpdate = (event, shipping) => {
+    const { user, msgAlert, match } = this.props
+    // make a delete axios request
+    purchaseUpdate(match.params.id, user, shipping)
+      // set the deleted variable to true, to redirect to the purchases page in render
+      .then(res => this.setState({ updated: true, purchase: res.data.purchase }))
+      .then(() => msgAlert({
+        heading: 'Shipping Updated Successfully!',
+        message: 'Your shipping preferences have been updated',
+        variant: 'success'
+      }))
+      .catch(error => {
+        msgAlert({
+          heading: 'Shipping Update Failed',
+          message: 'Failed with error: ' + error.message,
           variant: 'danger'
         })
       })
@@ -74,7 +93,7 @@ class ShowPurchase extends Component {
     // if the purchase is deleted
     if (deleted) {
       // redirect to the purchases index page
-      return <Redirect to="/products" />
+      return <Redirect to="/index-purchases" />
     }
 
     return (
@@ -84,10 +103,19 @@ class ShowPurchase extends Component {
           <h5>Item: {purchase.product.name}</h5>
           <p>{purchase.product.description}</p>
           <p>Price: ${purchase.product.price}</p>
+          <p>Shipping info: {purchase.shipping}</p>
+          <DropdownButton id="dropdown-basic-button" title="Shipping Options">
+            <Dropdown.Item onClick={(event) => this.handleUpdate(event, 'Standard Shipping: (7-10 Business Days)')}>Standard Shipping: (7-10 Business Days)</Dropdown.Item>
+            <Dropdown.Item onClick={(event) => this.handleUpdate(event, 'Priority Shipping: (3-5 Business Days)')}>Priority Shipping: (3-5 Business Days)</Dropdown.Item>
+            <Dropdown.Item onClick={(event) => this.handleUpdate(event, 'Express Shipping: (1-2 Business Days)')}>Express Shipping: (1-2 Business Days)</Dropdown.Item>
+          </DropdownButton>
           <Button onClick={this.handleDelete}>Get Refund</Button>
-          <Button>
-            <Link to="/products">Buy More</Link>
-          </Button>
+          <Link to="/products">
+            <Button>Buy More</Button>
+          </Link>
+          <Link to="/index-purchases">
+            <Button>View All Purchases</Button>
+          </Link>
         </div>
       </Fragment>
     )

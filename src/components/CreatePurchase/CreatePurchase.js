@@ -18,10 +18,10 @@ class CreatePurchase extends Component {
 
     const { user, msgAlert } = this.props
     const product = this.props.product
-    console.log('this should be a product id', product)
+    const shipping = 'Standard Shipping: (7-10 Business Days)'
 
     // create a purchase, pass it the purchase data and the user for its token
-    purchaseCreate(product, user)
+    purchaseCreate(product, user, shipping)
       // set the createdId to the id of the purchase we just created
       // .then(res => this.setState({ createdId: res.data.purchase._id }))
       .then(res => {
@@ -30,8 +30,8 @@ class CreatePurchase extends Component {
         return res
       })
       .then(res => msgAlert({
-        heading: 'Purchase Made',
-        message: 'Go',
+        heading: 'Purchase Made Successfully',
+        message: 'An invoice will be sent to your email.',
         variant: 'success'
       }))
       .catch(error => {
@@ -52,13 +52,19 @@ class CreatePurchase extends Component {
       // redirect to the movies show page
       return <Redirect to={`/purchases/${createdId}`} />
     }
-    return (
-      <div>
-        <Link to={`/purchases/${createdId}`}>
-          <Button onClick={this.handleClick}>Purchase</Button>
-        </Link>
-      </div>
-    )
+
+    const user = this.props.user
+    if (user) {
+      return (
+        <div>
+          <Link to={`/purchases/${createdId}`}>
+            <Button onClick={this.handleClick}>Buy Now</Button>
+          </Link>
+        </div>
+      )
+    } else if (!user) {
+      return null
+    }
   }
 }
 
