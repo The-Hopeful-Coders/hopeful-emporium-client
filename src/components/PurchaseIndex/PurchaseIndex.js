@@ -59,7 +59,7 @@ class PurchaseIndex extends Component {
     }
     const purchaseCards = purchases.map(purchase => {
       return (
-        <Card bg="secondary" key={purchase._id} style={{ width: '16rem', margin: 8 }}>
+        <Card bg="info" key={purchase._id} style={{ width: '14rem', margin: 8 }}>
           {/* <Card.Img variant='top' src={purchase.backgroundUrl}/> */}
           <Card.Body>
             <Card.Title>{purchase.product.name}</Card.Title>
