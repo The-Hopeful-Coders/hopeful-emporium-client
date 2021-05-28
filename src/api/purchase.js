@@ -29,9 +29,9 @@ export const purchaseShow = (id, user) => {
   })
 }
 
-export const purchaseUpdate = (productId, user, shipping) => {
+export const purchaseUpdate = (id, user, shipping) => {
   return axios({
-    url: apiUrl + '/purchases',
+    url: apiUrl + '/purchases/' + id,
     method: 'PATCH',
     // Add an authorization header
     headers: {
@@ -39,7 +39,7 @@ export const purchaseUpdate = (productId, user, shipping) => {
       'Authorization': `Bearer ${user.token}`
     },
     data: {
-      'purchase': { 'product': productId, 'shipping': shipping }
+      'purchase': { 'shipping': shipping }
     }
     // send the purchase object as our data for updating a purchase
   })

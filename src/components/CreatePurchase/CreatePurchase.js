@@ -18,7 +18,7 @@ class CreatePurchase extends Component {
 
     const { user, msgAlert } = this.props
     const product = this.props.product
-    const shipping = '7-10 business days'
+    const shipping = 'Standard Shipping: (7-10 Business Days)'
 
     // create a purchase, pass it the purchase data and the user for its token
     purchaseCreate(product, user, shipping)
@@ -52,13 +52,19 @@ class CreatePurchase extends Component {
       // redirect to the movies show page
       return <Redirect to={`/purchases/${createdId}`} />
     }
-    return (
-      <div>
-        <Link to={`/purchases/${createdId}`}>
-          <Button onClick={this.handleClick}>Buy Now</Button>
-        </Link>
-      </div>
-    )
+
+    const user = this.props.user
+    if (user) {
+      return (
+        <div>
+          <Link to={`/purchases/${createdId}`}>
+            <Button onClick={this.handleClick}>Buy Now</Button>
+          </Link>
+        </div>
+      )
+    } else if (!user) {
+      return null
+    }
   }
 }
 

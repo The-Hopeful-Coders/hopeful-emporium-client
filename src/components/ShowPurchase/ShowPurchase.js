@@ -19,8 +19,6 @@ class ShowPurchase extends Component {
 
   componentDidMount () {
     const { user, match, msgAlert } = this.props
-    console.log('this is the match', match)
-    console.log('this is user', user)
     // make a request for a single purchase
     purchaseShow(match.params.id, user)
       // set the purchase state, to the purchase we got back in the response's data
@@ -39,12 +37,12 @@ class ShowPurchase extends Component {
       })
   }
 
-  handleUpdate = event => {
+  handleUpdate = (event, shipping) => {
     const { user, msgAlert, match } = this.props
     // make a delete axios request
-    purchaseUpdate(match.params.id, user)
+    purchaseUpdate(match.params.id, user, shipping)
       // set the deleted variable to true, to redirect to the purchases page in render
-      .then(() => this.setState({ updated: true }))
+      .then(res => this.setState({ updated: true, purchase: res.data.purchase }))
       .then(() => msgAlert({
         heading: 'Shipping Updated Successfully!',
         message: 'Your shipping preferences have been updated',
@@ -107,8 +105,9 @@ class ShowPurchase extends Component {
           <p>Price: ${purchase.product.price}</p>
           <p>Shipping info: {purchase.shipping}</p>
           <DropdownButton id="dropdown-basic-button" title="Shipping Options">
-            <Dropdown.Item handleUpdate={this.handleUpdate}>Priority Shipping (3-4 Business Days)</Dropdown.Item>
-            <Dropdown.Item handleUpdate={this.handleUpdate}>Express Shipping (1 Business Day)</Dropdown.Item>
+            <Dropdown.Item onClick={(event) => this.handleUpdate(event, 'Standard Shipping: (7-10 Business Days)')}>Standard Shipping: (7-10 Business Days)</Dropdown.Item>
+            <Dropdown.Item onClick={(event) => this.handleUpdate(event, 'Priority Shipping: (3-5 Business Days)')}>Priority Shipping: (3-5 Business Days)</Dropdown.Item>
+            <Dropdown.Item onClick={(event) => this.handleUpdate(event, 'Express Shipping: (1-2 Business Days)')}>Express Shipping: (1-2 Business Days)</Dropdown.Item>
           </DropdownButton>
           <Button onClick={this.handleDelete}>Get Refund</Button>
           <Link to="/products">
