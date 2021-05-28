@@ -18,9 +18,10 @@ class CreatePurchase extends Component {
 
     const { user, msgAlert } = this.props
     const product = this.props.product
+    const shipping = '7-10 business days'
 
     // create a purchase, pass it the purchase data and the user for its token
-    purchaseCreate(product, user)
+    purchaseCreate(product, user, shipping)
       // set the createdId to the id of the purchase we just created
       // .then(res => this.setState({ createdId: res.data.purchase._id }))
       .then(res => {
@@ -54,7 +55,7 @@ class CreatePurchase extends Component {
     return (
       <div>
         <Link to={`/purchases/${createdId}`}>
-          <Button onClick={this.handleClick}>Purchase</Button>
+          <Button onClick={this.handleClick}>Buy Now</Button>
         </Link>
       </div>
     )
